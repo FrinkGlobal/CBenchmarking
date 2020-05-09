@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\perf_c10k.dir/objects.a
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\perf_c10k.dir/objects.a @CMakeFiles\perf_c10k.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe  -Wall -Wextra   -Wl,--whole-archive CMakeFiles\perf_c10k.dir/objects.a -Wl,--no-whole-archive  -o perf\c10k.exe -Wl,--out-implib,libc10k.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\perf_c10k.dir\linklibs.rsp

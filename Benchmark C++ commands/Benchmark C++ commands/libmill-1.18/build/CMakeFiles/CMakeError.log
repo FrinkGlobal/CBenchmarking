@@ -1,0 +1,57 @@
+Determining if the clock_gettime exist failed with the following output:
+Change Dir: C:/Users/Matt/source/repos/Benchmark C++ commands/Benchmark C++ commands/libmill-1.18/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe cmTC_cd7fa/fast && C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f CMakeFiles\cmTC_cd7fa.dir\build.make CMakeFiles/cmTC_cd7fa.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/Matt/source/repos/Benchmark C++ commands/Benchmark C++ commands/libmill-1.18/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_cd7fa.dir/CheckSymbolExists.c.obj
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe   -Wall -Wextra    -o CMakeFiles\cmTC_cd7fa.dir\CheckSymbolExists.c.obj   -c "C:\Users\Matt\source\repos\Benchmark C++ commands\Benchmark C++ commands\libmill-1.18\build\CMakeFiles\CMakeTmp\CheckSymbolExists.c"
+Linking C executable cmTC_cd7fa.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_cd7fa.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_cd7fa.dir/objects.a
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\cmTC_cd7fa.dir/objects.a @CMakeFiles\cmTC_cd7fa.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe  -Wall -Wextra     -Wl,--whole-archive CMakeFiles\cmTC_cd7fa.dir/objects.a -Wl,--no-whole-archive  -o cmTC_cd7fa.exe -Wl,--out-implib,libcmTC_cd7fa.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_cd7fa.dir\linklibs.rsp
+C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot find -lrt
+collect2.exe: error: ld returned 1 exit status
+mingw32-make.exe[1]: *** [CMakeFiles\cmTC_cd7fa.dir\build.make:105: cmTC_cd7fa.exe] Error 1
+mingw32-make.exe[1]: Leaving directory 'C:/Users/Matt/source/repos/Benchmark C++ commands/Benchmark C++ commands/libmill-1.18/build/CMakeFiles/CMakeTmp'
+mingw32-make.exe: *** [Makefile:137: cmTC_cd7fa/fast] Error 2
+
+
+File C:/Users/Matt/source/repos/Benchmark C++ commands/Benchmark C++ commands/libmill-1.18/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <time.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef clock_gettime
+  return ((int*)(&clock_gettime))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the function posix_memalign exists failed with the following output:
+Change Dir: C:/Users/Matt/source/repos/Benchmark C++ commands/Benchmark C++ commands/libmill-1.18/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe cmTC_2bc79/fast && C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f CMakeFiles\cmTC_2bc79.dir\build.make CMakeFiles/cmTC_2bc79.dir/build
+mingw32-make.exe[1]: Entering directory 'C:/Users/Matt/source/repos/Benchmark C++ commands/Benchmark C++ commands/libmill-1.18/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2bc79.dir/CheckFunctionExists.c.obj
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe   -Wall -Wextra -DCHECK_FUNCTION_EXISTS=posix_memalign   -o CMakeFiles\cmTC_2bc79.dir\CheckFunctionExists.c.obj   -c "C:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.c"
+<command-line>: warning: conflicting types for built-in function 'posix_memalign' [-Wbuiltin-declaration-mismatch]
+C:\Program Files\CMake\share\cmake-3.17\Modules\CheckFunctionExists.c:7:3: note: in expansion of macro 'CHECK_FUNCTION_EXISTS'
+   CHECK_FUNCTION_EXISTS(void);
+   ^~~~~~~~~~~~~~~~~~~~~
+Linking C executable cmTC_2bc79.exe
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_2bc79.dir\link.txt --verbose=1
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\cmTC_2bc79.dir/objects.a
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\cmTC_2bc79.dir/objects.a @CMakeFiles\cmTC_2bc79.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\gcc.exe  -Wall -Wextra -DCHECK_FUNCTION_EXISTS=posix_memalign    -Wl,--whole-archive CMakeFiles\cmTC_2bc79.dir/objects.a -Wl,--no-whole-archive  -o cmTC_2bc79.exe -Wl,--out-implib,libcmTC_2bc79.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_2bc79.dir\linklibs.rsp
+CMakeFiles\cmTC_2bc79.dir/objects.a(CheckFunctionExists.c.obj):CheckFunctionExists.c:(.text+0x15): undefined reference to `posix_memalign'
+collect2.exe: error: ld returned 1 exit status
+mingw32-make.exe[1]: *** [CMakeFiles\cmTC_2bc79.dir\build.make:105: cmTC_2bc79.exe] Error 1
+mingw32-make.exe[1]: Leaving directory 'C:/Users/Matt/source/repos/Benchmark C++ commands/Benchmark C++ commands/libmill-1.18/build/CMakeFiles/CMakeTmp'
+mingw32-make.exe: *** [Makefile:137: cmTC_2bc79/fast] Error 2
+
+
+
