@@ -7,13 +7,36 @@
 
 #include "Stopwatch.h"
 
+#include <thread>
 #include <mutex>          // std::mutex
+#include <queue>
 
 std::mutex mtx;           // mutex for critical section
+
+std::thread* m_thread;
+std::mutex m_mutex;
+std::queue<int> msgQueue;
 
 int doNothing() {
     int i = 0;
     return i;
+}
+
+int ThreadMsgs = 1000000;
+void recieveMsgs() {
+    Stopwatch sw;
+    sw.start();
+    for (int i = 0; i < ThreadMsgs; i++) {
+        if (msgQueue.size() > 0) {
+            int msg = msgQueue.front();
+            msgQueue.pop();
+        }
+    }
+    sw.stop();
+
+    double Cost = (double)sw.get_total_time_microseconds() / (double)ThreadMsgs;
+
+    std::cout << "recieving messages took " << Cost << " us.\n" << std::endl;
 }
 
 int main()
@@ -31,7 +54,6 @@ int main()
     }
     sw.stop();
 
-    sw.print_elapsed_us("for loop");
     double forLoopCost = (double)sw.get_total_time_microseconds()/(double)forRuns;
 
     std::cout << "for took " << forLoopCost << " us.\n" << std::endl;
@@ -77,11 +99,37 @@ int main()
     std::cout << "int assignment took " << Cost / assignRuns << " us.\n" << std::endl;
 
     ///////////////////////////////////////////////////////////////////////////////////
-    const int malloc_runs = 100000;
-    void* malloc_me[malloc_runs];
+    const int malloc_runs = 20000;
+    std::shared_ptr<int> shared_ptr_int;
     sw.restart();
     for (int i = 0; i < malloc_runs; i++) {
-        malloc_me[i] = malloc(1000);
+        shared_ptr_int = std::make_shared<int>(1000);
+    }
+    sw.stop();
+
+    //sw.print_elapsed_us("add");
+    Cost = (double)sw.get_elapsed_time_microseconds() / (double)malloc_runs - forLoopCost;
+
+    std::cout << "shared_ptr_array loop took " << Cost << " us.\n" << std::endl;
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    std::unique_ptr<int> unique_ptr_int;
+    sw.restart();
+    for (int i = 0; i < malloc_runs; i++) {
+        unique_ptr_int = std::make_unique<int>(1000);
+    }
+    sw.stop();
+
+    //sw.print_elapsed_us("add");
+    Cost = (double)sw.get_elapsed_time_microseconds() / (double)malloc_runs - forLoopCost;
+
+    std::cout << "unique_ptr loop took " << Cost << " us.\n" << std::endl;
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    int* malloc_me[malloc_runs];
+    sw.restart();
+    for (int i = 0; i < malloc_runs; i++) {
+        malloc_me[i] = (int *)malloc(4000);
     }
     sw.stop();
 
@@ -105,7 +153,7 @@ int main()
     ///////////////////////////////////////////////////////////////////////////////////
     sw.restart();
     for (int i = 0; i < malloc_runs; i++) {
-        malloc_me[i] = malloc(1000);
+        malloc_me[i] = (int *)malloc(1000);
         free(malloc_me[i]);
     }
     sw.stop();
@@ -116,7 +164,69 @@ int main()
     std::cout << "malloc-free loop took " << Cost << " us.\n" << std::endl;
 
     ///////////////////////////////////////////////////////////////////////////////////
-    int lockRuns = 10000000;
+    sw.restart();
+    for (int i = 0; i < malloc_runs; i++) {
+        malloc_me[i] = (int*)_malloca(4000);
+    }
+    sw.stop();
+
+    //sw.print_elapsed_us("add");
+    Cost = (double)sw.get_elapsed_time_microseconds() / (double)malloc_runs - forLoopCost;
+
+    std::cout << "alloca took " << Cost / malloc_runs << " us.\n" << std::endl;
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    sw.restart();
+    for (int i = 0; i < malloc_runs; i++) {
+        malloc_me[i] = (int*)malloc(1000);
+        *malloc_me[i] = rand() * RAND_MAX;
+    }
+    sw.stop();
+
+    //sw.print_elapsed_us("add");
+    Cost = (double)sw.get_elapsed_time_microseconds() / (double)malloc_runs - forLoopCost;
+
+    std::cout << "fill array with rands took " << Cost << " us.\n" << std::endl;
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    int* memcopy_to_me[malloc_runs];
+
+    sw.restart();
+    for (int i = 0; i < malloc_runs; i++) {
+        memcopy_to_me[i] = (int*)malloc(1000);
+        memcpy(memcopy_to_me[i], malloc_me[i], 1000);
+    }
+    sw.stop();
+
+    //sw.print_elapsed_us("add");
+    Cost = (double)sw.get_elapsed_time_microseconds() / (double)malloc_runs - forLoopCost;
+
+    std::cout << "memcpy array rands took " << Cost << " us.\n" << std::endl;
+
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    //spawn recieving thread
+    std::thread RunMsgThread(recieveMsgs);
+
+    //send messages
+    sw.restart();
+    int msg = 0;
+    for (int i = 0; i < ThreadMsgs; i++) {
+        if (msgQueue.size() > 0) {
+            msgQueue.push(msg);
+        }
+    }
+    sw.stop();
+
+    RunMsgThread.join();
+
+    Cost = (double)sw.get_total_time_microseconds() / (double)ThreadMsgs;
+
+    std::cout << "sending messages took " << Cost << " us.\n" << std::endl;
+
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    int lockRuns = 100000000;
 
     sw.restart();
     for (int i = 0; i < lockRuns; i++) {
