@@ -11,3 +11,5 @@ Benchmark C++ commands/.vs/Benchmark C++ commands/v16/ipch/AutoPCH/1dcac50480243
 Benchmark C++ commands/x64/Debug/Benchmark C++ commands.pdb
 Benchmark C++ commands/x64/Debug/Benchmark C++ commands.ilk
 Benchmark C++ commands/x64/Debug/Benchmark C++ commands.exe
+*.exe
+*.pdb
